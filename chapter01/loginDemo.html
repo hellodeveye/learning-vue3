@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3 Demo</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+<body>
+    <div style="text-align: center;" id = "app">
+        <h1>{{title}}</h1>
+        <div v-if="noLogin">账号：<input type="text" v-model="username" placeholder="请输入用户名"/></div>
+        <div v-if="noLogin">密码：<input type="password" v-model="password" placeholder="请输入密码"/></div>
+        <div><button v-on:click="click" style="font-size:18px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:30px; cursor:pointer;">{{buttonText}}</button></div>
+    </div>
+</body>
+<script>
+
+    const App = {
+
+        data() {
+            return {
+                title:"欢迎您：未登录",
+                username:"",
+                password:"",
+                buttonText:"登录",
+                noLogin:true
+            }
+        },
+        methods: {
+            click(){
+                if(this.noLogin){
+                    this.login()
+                }else{
+                    this.logout()
+                }
+            },
+            login(){
+                // 账号密码验证
+                if(this.username.length > 0 && this.password.length > 0){
+                    this.noLogin = false
+                    this.buttonText = "注销"
+                    this.title = "欢迎您：" + this.username
+                }else{
+                    alert("请输入账号和密码")
+                }
+            },
+            logout(){
+                this.noLogin = true
+                this.buttonText = "登录"
+                this.title = "欢迎您：未登录"
+            }
+        }
+
+    }
+    
+Vue.createApp(App).mount('#app')
+  
+</script>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CSS 选择器</title>
+    </head>
+    <style>
+        /* 对所有元素生效 */
+        * {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        /* 对所有p标签生效 */
+        p {
+            color: red;
+        }
+        /* 对所有a标签生效 */
+        a {
+            color: blue;
+        }
+        /* 对class为p2的标签生效 */
+        .p2 {
+            color: green;
+        }
+        /* 对id为p3的标签生效 */
+        #p3 {
+            color: yellow;
+        }
+
+        /* 后代选择器 */
+        div p {
+            color: cyan;
+        }
+
+        /* 并集选择器 */
+        .p3 , #p4 {
+            color: pink;
+        }
+
+        .text {
+            text-indent: 100px;
+            text-align: center;
+            word-spacing: 20px;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            text-decoration: underline;
+        }
+
+        .border {
+            border-style: solid;
+            border-width: 4px;
+            border-color: red;
+        }
+
+        .sp1 {
+            background-color: red;
+            color: white;
+            padding-right: 30px;
+        }
+
+
+        .sp2 {
+            background-color: blue;
+            color: white;
+            padding-left: 30px;
+        }
+
+        .sp3 {
+            background-color: green;
+            color: white;
+            margin-left: 30px;
+        }
+
+        .sp4 {
+            background-color: indigo;
+            color: white;
+            margin-right: 30px;
+        }
+
+
+    </style>
+    <body>
+        <h1>一级标题</h1>
+        <p>这是一个段落</p>
+        <a href="https://www.baidu.com">这是一个链接</a>
+        <p class=".p2">这是一个段落</p>
+        <p id="p3">这是一个段落</p>
+
+        <!-- div 嵌套p-->
+         <div><p>div 中嵌套p</p></div>
+
+         <p class="p3">这是一个段落</p>
+         <p id="p4">这是一个段落</p>
+
+         <div class="text">文本属性配置 Hello World</div>
+
+         <div class="border">边框样式</div>
+
+
+         <!--边距 span 是行内元素，不会独占一行-->
+         <span class="sp1">sp1</span>
+         <span class="sp2">sp2</span>
+         <span class="sp3">sp3</span>
+         <span class="sp4">sp4</span>
+    </body>
+</html>

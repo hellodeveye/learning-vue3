@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Document</title>
+    </head>
+    <body>
+        <div style="text-align: center;">
+            <h1 id="count" style="font-size: 40px; color: red;">0</h1>
+            <button style="font-size: 20px; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="add()">点击</button>
+        </div>
+
+
+        <div id="img" style="visibility: visible;">
+            <img src="demo.png" alt="图片" width="400px"/>
+        </div>
+        <div>
+            <button id="toggle" style="font-size: 20px; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;" onclick="toggle()">显示</button>
+        </div>
+    </body>
+    <script>
+        var count = 0;
+        function add() {
+            count++;
+            document.getElementById("count").innerHTML = count;
+        }
+
+        function toggle() {
+            if (document.getElementById("img").style.visibility == "visible") {
+                document.getElementById("img").style.visibility = "hidden";
+                document.getElementById("toggle").innerHTML = "显示";
+            } else {
+                document.getElementById("img").style.visibility = "visible";
+                document.getElementById("toggle").innerHTML = "隐藏";
+            }
+        }
+
+
+        // 变量
+        var a = 100;
+        var b = "Hello World";
+        var c = {
+            name:"张三",
+            age:20,
+            gender:"男"
+        }
+
+        var d = [1,2,3,4,5];
+        var e = false
+
+        // 运算
+        var m = 1 + 1
+        var n = 10 > 5
+        var o = false && true
+
+        var p = 1 << 1
+
+        // 函数定义
+        // way 1
+        function func1(param) {
+            console.log("执行了func1 参数是：" + param);
+        }
+        // way 2
+        var func2 = (param) => {
+            console.log("执行了func2 参数是：" + param);
+        }
+
+        // 函数调用
+        func1("Hello");
+        func2("World");
+
+        // 条件分支
+        var i = 0;
+        var j = 1;
+
+        if (i > j) {
+            console.log("i 大于 j");
+        }  else if (i == j) {
+            console.log("i 等于 j");
+        } else {
+            console.log("i 小于 j");
+        }
+
+        // switch
+        var u = 0;
+        switch (u) {
+            case 0:
+                console.log("u 等于 0");
+                break;
+            case 1:
+                console.log("u 等于 1");
+                break;
+            default:
+                console.log("u 等于其他");
+                break;
+        }
+
+
+        // 循环
+        var k = 0;
+        while (k < 10) {
+            console.log("k 的值是：" + k);
+            k++;
+        }
+
+        for (var l = 0; l < 10; l++) {
+            console.log("l 的值是：" + l);
+        }
+
+        var m = 0;
+        do {
+            console.log("m 的值是：" + m);
+            m++;
+        } while (m < 10);
+
+    </script>
+</html>
