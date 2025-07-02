@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>条件</title>
+        <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+        <style>
+            #h1 {
+                color: red;
+            }
+            .h1 {
+                color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" style="text-align: center;">
+            <h1>v-else 必须紧跟者v-if 才可以生效，否则会报错</h1>
+          <h1 v-if="show">显示</h1>
+          <h1 v-else>隐藏</h1>
+          <button v-on:click="changeShow" style="font-size:22px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:5px; cursor:pointer;">点击</button>
+
+
+
+          <div style="justify-content: center; align-items: center; margin-top: 50px;">
+                <h1>v-if 和 v-else-if 和 v-else 可以一起使用</h1>
+                <h1 v-if="score >= 90">优秀</h1>
+                <h1 v-else-if="score >= 80">良好</h1>
+                <h1 v-else-if="score >= 60">及格</h1>
+                <h1 v-else>不及格{{score}}</h1>
+          </div>
+
+          <div v-if="show" style="justify-content: center; align-items: center; margin-top: 50px;">
+            <h1>使用div包裹，div本身会被渲染</h1>
+            <p>内容</p>
+            <p>内容</p>
+            <p>内容</p>
+          </div>
+
+          <template v-if="show">
+            <h1>使用template包裹，template本身不会被渲染</h1>
+            <p>内容</p>
+            <p>内容</p>
+            <p>内容</p>
+          </template>
+
+
+          <h1>v-show 和 v-if 的区别</h1>
+          <h1 v-show="show">v-show 不支持template，也不支持v-else-if，v-show 是display:none; 和 v-if 是直接销毁和重建</h1>
+          <h1 v-show="!show">v-show 不支持template，也不支持v-else-if，v-show 是display:none; 和 v-if 是直接销毁和重建</h1>
+        </div>
+    </body>
+    <script>
+        const app = {
+            data() {
+                return {
+                    show:true,
+                    score: 50
+                }
+            },
+            methods: {
+                changeShow() {
+                    this.show = !this.show
+                },
+                
+            }
+        }
+        Vue.createApp(app).mount('#app')
+    </script>
+</html>

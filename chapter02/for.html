@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>循环</title>
+        <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+        <style>
+            #h1 {
+                color: red;
+            }
+            .h1 {
+                color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <h1>v-for 循环</h1>
+            <ul>
+                <li v-for="item in list">{{item}}</li>
+            </ul>
+            <ol>
+                <li v-for="user in users">
+                    <div style="color: red;">姓名：{{user.name}}</div>
+                    <div style="color: blue;">年龄：{{user.age}}</div>
+                </li>
+            </ol>
+            <h1>v-for 遍历索引，index 从0开始</h1>
+            <ol>
+                <li v-for="(item,index) in list">{{index}}:{{item}}</li>
+            </ol>
+            <h1>v-for 遍历对象</h1>
+            <ol>
+                <li v-for="(value,key,index) in person">{{key}}:{{value}}</li>
+            </ol>
+
+
+            <h1>列表操作</h1>
+            <ul>
+                <li v-for="item in list">{{item}}</li>
+            </ul>
+            <button v-on:click="addItem" style="font-size:18px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:5px; cursor:pointer; margin-right: 10px;">添加</button>
+            <button v-on:click="removeItem" style="font-size:18px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:5px; cursor:pointer; margin-right: 10px;">删除</button>
+            <button v-on:click="updateItem" style="font-size:18px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:5px; cursor:pointer; margin-right: 10px;">更新</button>
+            <button v-on:click="sortList" style="font-size:18px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:5px; cursor:pointer; margin-right: 10px;">排序</button>
+
+
+            <h1>循环渲染使用handle处理,只显示偶数</h1>
+            <ul>
+                <li v-for="item in handle(list)">{{item}}</li>
+            </ul>
+        </div>
+    </body>
+    <script>
+        const app = {
+            data() {
+                return {
+                    list: [1, 2, 3, 4, 5],
+                    users:[
+                        {name: '张三', age: 18},
+                        {name: '李四', age: 20},
+                        {name: '王五', age: 22},
+                        {name: '赵六', age: 24},
+                        {name: '孙七', age: 26}
+                    ],
+                    person:{
+                        name: '张三',
+                        age: 18,
+                        sex: '男'
+                    }
+                }
+            },
+            methods: {
+                changeShow() {
+                    this.show = !this.show
+                },
+                addItem() {
+                    this.list.push(this.list.length + 1)
+                },
+                removeItem() {
+                    this.list.pop()
+                },
+                updateItem() {
+                    this.list[0] = '更新'
+                },
+                sortList() {
+                    this.list.reverse()
+                },
+                handle(list) {
+                    return list.filter(item => item % 2 === 0)
+                }
+            }
+        }
+        Vue.createApp(app).mount('#app')
+    </script>
+</html>

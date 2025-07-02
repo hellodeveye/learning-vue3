@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>模板插值</title>
+        <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+        <style>
+            #h1 {
+                color: red;
+            }
+            #h2 {
+                color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" style="text-align: center;">
+            <!--使用{{}}进行插值-->
+            <h1>这里是模板的内容:{{count}}</h1>
+            <h1 v-once>这里是模板的内容，只渲染一次,使用v-once:{{count}}</h1>
+            <h1 v-html="htmlContent"></h1>
+            <button v-on:click="clickButton" style="font-size:22px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:5px; cursor:pointer;">点击</button>
+
+
+            <div style="margin-top: 20px; text-align: center;">
+                <h1 v-bind:id="id1">使用v-bind</h1>
+                <button v-on:click="changeId" style="font-size:22px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:5px; cursor:pointer;">点击</button>
+            </div>
+        </div>
+    </body>
+    <script>
+        const app = {
+            data() {
+                return {
+                    count: 0,
+                    htmlContent: '<span style="color:red;">这里是HTML的内容，使用v-html进行渲染</span>',
+                    id1: 'h1'
+                }
+            },
+            methods: {
+                clickButton() {
+                    this.count++
+                },
+                changeId() {
+                    this.id1 = 'h2'
+                }
+            }
+        }
+        Vue.createApp(app).mount('#app')
+    </script>
+</html>
