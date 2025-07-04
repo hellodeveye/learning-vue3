@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+<body>
+    <div style="text-align: center;" id = "app">
+        <h1>{{count}}</h1>
+        <button @click="clickBtn" style="margin-left:10px;font-size:22px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:5px; cursor:pointer;">点击</button>
+        <button @click="clickBtn1(2)" style="margin-left:10px;font-size:22px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:5px; cursor:pointer;">点击</button>
+        <button @click="clickBtn2(2,$event)" style="margin-left:10px;font-size:22px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:5px; cursor:pointer;">点击</button>
+        <button @click="clickBtn1(2),print($event)" style="margin-left:10px;font-size:22px; padding:10px 20px; border:none; color:white; background-color:brown; border-radius:5px; cursor:pointer;">多事件</button>
+        <h1>事件冒泡</h1>
+        <div @click="click1">
+            外层
+            <div @click="click2">
+                中间层
+                 <div @click="click3">
+                    点击
+                 </div>
+            </div>
+        </div>
+        <h1>事件修饰符 capture</h1>
+        <div @click.capture="click1">
+            外层
+            <div @click.capture="click2">
+                中间层
+                 <div @click.capture="click3">
+                    点击
+                 </div>
+            </div>
+        </div>
+        <h1>事件修饰符 stop</h1>
+        <div @click="click1">
+            外层
+            <div @click.stop="click2">
+                中间层
+                 <div @click="click3">
+                    点击
+                 </div>
+            </div>
+        </div>
+
+        <h1>事件修饰符 prevent</h1>
+        <form @submit.prevent="submitForm">
+            <input type="text" name="username" placeholder="请输入用户名">
+            <input type="password" name="password" placeholder="请输入密码">
+            <button type="submit">提交</button>
+        </form>
+        
+    </div>
+</body>
+<script>
+
+    const App = {
+
+        data() {
+            return {
+                count:0
+            }
+        },
+        methods: {
+            clickBtn(){
+                this.count++
+            },
+            clickBtn1(num){
+                this.count += num
+            },
+            clickBtn2(num,event){
+                this.count += num
+                console.log(event)
+            },
+            print(event){
+                console.log(event)
+            },
+            click1(){
+                console.log('外层')
+            },
+            click2(){
+                console.log('中间层')
+            },
+            click3(){
+                console.log('点击')
+            },
+            submitForm(event){
+                event.preventDefault()
+                console.log('提交')
+            }
+        }
+    }
+Vue.createApp(App).mount('#app')
+  
+</script>
+</html>

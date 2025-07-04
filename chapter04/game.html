@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>弹球游戏</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+    <style>
+        .container{
+            margin: 0 auto;
+            width: 500px;
+            height: 500px;
+            position: relative;
+            background-color: #f0f0f0;
+            border: 1px solid black;
+            
+        }
+       .ball{
+        width: 50px;
+        height: 50px;
+        background-color: red;
+        border-radius: 50%;
+        margin: 0 auto;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        position: absolute;
+       }
+       .border{
+        width: 100px;
+        height: 20px;
+        background-color: black;
+        position: absolute;
+        bottom: 0;
+       }
+    </style>
+</head>
+
+<body>
+    <div style="text-align: center;" id="app"> 
+        <!--游戏说明-->
+        <div style="margin-bottom: 10px; font-size: 16px;">
+            <p>使用 ← → 方向键或 A D 键控制挡板移动</p>
+        </div>
+        <!--游戏区域-->
+        <div class="container">
+            <!--底部挡板-->
+            <div class="border" :style="{left:borderX+'px'}"></div>
+            <!--弹球-->
+            <div class="ball" :style="{left:ballX+'px',top:ballY+'px'}"></div>
+            <!--游戏结束提示-->
+            <div v-if="fail" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);color: red;font-size: 24px;font-weight: bold;text-align: center;">
+                <div>游戏结束</div>
+                <div style="font-size: 16px; margin-top: 10px;">按空格键或回车键重新开始</div>
+            </div>
+        </div>
+        
+        
+    </div>
+</body>
+<script>
+
+    const App = {
+
+        data() {
+            return {
+                borderX: 200,        // 挡板初始位置 (居中)
+                ballX: 225,          // 球初始X位置 (居中)
+                ballY: 100,          // 球初始Y位置
+                fail: false,         // 游戏是否结束
+                ballSpeedX: 3,       // 球X方向速度
+                ballSpeedY: 3,       // 球Y方向速度
+                gameTimer: null,     // 游戏定时器
+                borderSpeed: 5,      // 挡板移动速度
+                keys: {              // 按键状态跟踪
+                    left: false,
+                    right: false
+                }
+            }
+        },
+        mounted(){
+            // 添加键盘事件
+            this.enterKeyUp()
+            // 开始游戏循环
+            this.startGame()
+        },
+        methods: {
+            // 监听键盘事件
+            enterKeyUp() {
+                // 按键按下事件
+                document.addEventListener('keydown', (e) => {
+                    if (this.fail) {
+                        // 游戏结束时只响应重新开始的按键
+                        if (e.key === ' ' || e.key === 'Enter') {
+                            this.resetGame();
+                        }
+                        return;
+                    }
+                    
+                    switch(e.key) {
+                        case 'ArrowLeft':
+                        case 'a':
+                        case 'A':
+                            this.keys.left = true;
+                            break;
+                        case 'ArrowRight':
+                        case 'd':
+                        case 'D':
+                            this.keys.right = true;
+                            break;
+                    }
+                });
+                
+                // 按键松开事件
+                document.addEventListener('keyup', (e) => {
+                    switch(e.key) {
+                        case 'ArrowLeft':
+                        case 'a':
+                        case 'A':
+                            this.keys.left = false;
+                            break;
+                        case 'ArrowRight':
+                        case 'd':
+                        case 'D':
+                            this.keys.right = false;
+                            break;
+                    }
+                });
+            },
+            
+            // 处理输入
+            handleInput() {
+                if (this.keys.left) {
+                    this.moveBorderLeft();
+                }
+                if (this.keys.right) {
+                    this.moveBorderRight();
+                }
+            },
+            
+            // 挡板向左移动
+            moveBorderLeft() {
+                if (this.borderX > 0) {
+                    this.borderX = Math.max(0, this.borderX - this.borderSpeed);
+                }
+            },
+            
+            // 挡板向右移动
+            moveBorderRight() {
+                if (this.borderX < 400) { // 500 - 100(挡板宽度) = 400
+                    this.borderX = Math.min(400, this.borderX + this.borderSpeed);
+                }
+            },
+            
+            // 开始游戏
+            startGame() {
+                this.gameTimer = setInterval(() => {
+                    if (!this.fail) {
+                        this.handleInput(); // 处理输入
+                        this.moveBall();
+                    }
+                }, 16); // 约60FPS
+            },
+            
+            // 移动球
+            moveBall() {
+                // 更新球的位置
+                this.ballX += this.ballSpeedX;
+                this.ballY += this.ballSpeedY;
+                
+                // 检测碰撞
+                this.checkCollision();
+            },
+            
+            // 检测碰撞
+            checkCollision() {
+                // 左边界碰撞
+                if (this.ballX <= 0) {
+                    this.ballSpeedX = -this.ballSpeedX;
+                    this.ballX = 0; // 确保球不超出左边界
+                }
+                
+                // 右边界碰撞 (500px容器宽度 - 50px球宽度 = 450px最大位置)
+                if (this.ballX >= 450) {
+                    this.ballSpeedX = -this.ballSpeedX;
+                    this.ballX = 450; // 确保球不超出右边界
+                }
+                
+                // 顶部边界碰撞
+                if (this.ballY <= 0) {
+                    this.ballSpeedY = -this.ballSpeedY;
+                    this.ballY = 0;
+                }
+                
+                // 检测与挡板的碰撞 (挡板在底部480-500px位置，球高度50px)
+                // 球的底部 = ballY + 50，挡板顶部 = 480
+                if (this.ballY + 50 >= 480 && this.ballY + 50 <= 500) { // 球底部接触挡板
+                    // 检测球是否在挡板的水平范围内
+                    if (this.ballX + 50 >= this.borderX && this.ballX <= this.borderX + 100) {
+                        this.ballSpeedY = -this.ballSpeedY;
+                        this.ballY = 430; // 确保球在挡板上方 (480 - 50 = 430)
+                        
+                        // 根据球撞击挡板的位置调整反弹角度
+                        let hitPos = (this.ballX + 25 - this.borderX) / 100; // 0-1之间的值
+                        hitPos = Math.max(0, Math.min(1, hitPos)); // 确保在0-1范围内
+                        this.ballSpeedX = (hitPos - 0.5) * 6; // 调整X方向速度，增加游戏趣味性
+                    }
+                }
+                
+                // 检测球是否落到底部（游戏结束）
+                if (this.ballY >= 500) {
+                    this.fail = true;
+                    clearInterval(this.gameTimer);
+                }
+            },
+            
+            // 重置游戏
+            resetGame() {
+                this.borderX = 200;
+                this.ballX = 225;
+                this.ballY = 100;
+                this.fail = false;
+                this.ballSpeedX = 3;
+                this.ballSpeedY = 3;
+                // 清除按键状态
+                this.keys.left = false;
+                this.keys.right = false;
+                
+                if (this.gameTimer) {
+                    clearInterval(this.gameTimer);
+                }
+                this.startGame();
+            }
+        },
+        
+        // 组件销毁时清理定时器
+        beforeUnmount() {
+            if (this.gameTimer) {
+                clearInterval(this.gameTimer);
+            }
+        }
+    }
+    Vue.createApp(App).mount('#app')
+
+</script>
+
+</html>

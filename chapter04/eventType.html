@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+    <style>
+        th,
+        td {
+            border-top: 2px solid green;
+            border-bottom: 2px solid green;
+            border-left: none;
+            border-right: 2px solid green;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        th:first-child,
+        td:first-child {
+            border-right: 2px solid green;
+            border-left: none;
+        }
+
+        th:last-child,
+        td:last-child {
+            border-right: none;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div style="text-align: left;" id="app">
+
+        <table
+            style="margin: 0 auto; width: 80%; border-collapse: collapse; border-top: 5px solid green; border-bottom: 5px solid green;">
+            <thead>
+                <th>事件</th>
+                <th>意义</th>
+                <th>可用的元素</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>click</td>
+                    <td>点击事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+                <tr>
+                    <td>dblclick</td>
+                    <td>双击事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+                <tr>
+                    <td>focus</td>
+                    <td>获取焦点事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+                <tr>
+                    <td>blur</td>
+                    <td>失去焦点事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+                <tr>
+                    <td>select</td>
+                    <td>选择事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+                <tr>
+                    <td>change</td>
+                    <td>值改变事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+                <tr>
+                    <td>mouseenter</td>
+                    <td>鼠标进入事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+                <tr>
+                    <td>mouseleave</td>
+                    <td>鼠标离开事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+                <tr>
+                    <td>mousedown</td>
+                    <td>鼠标按下事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+                <tr>
+                    <td>mouseup</td>
+                    <td>鼠标松开事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+                <tr>
+                    <td>keydown</td>
+                    <td>键盘按下事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+                <tr>
+                    <td>keyup</td>
+                    <td>键盘松开事件</td>
+                    <td>button,input,select,textarea,a,div,span,img,form,table,tbody,tr,td,th,ul,li,ol,dl,dt,dd,p,h1,h2,h3,h4,h5,h6
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div @click="click">单击事件</div>
+        <div @dblclick="dblClick">双击事件</div>
+        <input @focus="focus" @blur="blur" @change="change" @keyup.enter="enter" placeholder="获取焦点事件">
+
+        
+        
+    </div>
+</body>
+<script>
+
+    const App = {
+
+        data() {
+            return {
+                count: 0
+            }
+        },
+        methods: {
+            click() {
+                console.log('单击事件')
+            },
+            dblClick() {
+                console.log('双击事件')
+            },
+            focus() {
+                console.log('获取焦点事件')
+            },
+            blur() {
+                console.log('失去焦点事件')
+            },
+            select() {
+                console.log('选择事件')
+            },
+            change() {
+                console.log('值改变事件')
+            },
+            mouseDown() {
+                console.log('鼠标按下事件')
+            },
+            mouseUp() {
+                console.log('鼠标松开事件')
+            },
+            keyDown() {
+                console.log('键盘按下事件')
+            },
+            keyUp() {
+                console.log('键盘松开事件')
+            },
+            enter() {
+                console.log('回车事件')
+            }
+        }
+    }
+    Vue.createApp(App).mount('#app')
+
+</script>
+
+</html>
