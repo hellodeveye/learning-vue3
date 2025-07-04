@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>注册组件</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+    <style>
+        .container {
+            margin: 0 auto;
+            width: 300px;
+            margin-top: 100px;
+            text-align: center;
+        }
+
+        .subTitle {
+            color: gray;
+            font-size: 14px;
+        }
+
+        .title {
+            font-size: 45px;
+        }
+
+        .input {
+            width: 90%;
+            border-radius: 6px;
+            height: 25px;
+            margin-top: 10px;
+            background-color: cornsilk;
+            border-style: solid;
+            border-color: silver;
+        }
+
+        .inputContainer {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .subContainer {
+            text-align: left;
+        }
+
+        .field {
+            font-size: 14px;
+            text-align: left;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        .tip {
+            margin-top: 5px;
+            font-size: 12px;
+            color: gray;
+        }
+
+        .setting {
+            font-size: 12px;
+            color: black
+        }
+
+        .label {
+            font-size: 12px;
+            margin-left: 5px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+        .btn {
+            border-radius: 5px;
+            height: 30px;
+            width: 278px;
+            background-color: deepskyblue;
+            color: white;
+            border-style: none;
+            border-color: #007bff;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div class="container">
+            <div class="subTitle">加入我们，一起学习Vue3</div>
+            <div class="title">创建你的账号</div>
+            
+                <div v-for="(field,index) in fields" :key="field.label">
+                    <div class="field">{{field.label}} <span v-if="field.required" style="color: red;">*</span></div>
+                    <input v-model="field.model" class="input" :type="field.type" :placeholder="field.placeholder">
+                    <div v-if="index === 2">
+                        请确认密码长度为6-12位
+                    </div>
+                </div>
+
+                <div class="subContainer">
+                    <p>偏好设置</p>
+                    <input type="checkbox" name="preference" value="1">
+                    <label class="label" for="preference">接收更新邮件</label>
+                </div>
+                <div>
+                    <button @click="createAccount" class="btn">创建账号</button>
+                </div>
+
+            
+        </div>
+    </div>
+</body>
+<script>
+    const app = {
+        data() {
+            return {
+                fields: [
+                    {
+                        label: '用户名',
+                        type: 'text',
+                        placeholder: '请输入用户名',
+                        required: true, 
+                        model: ""
+                    },
+                    {
+                        label: '邮箱地址',
+                        type: 'email',
+                        placeholder: '请输入邮箱地址',
+                        required: false,
+                        model: ""
+                    },
+
+                    {
+                        label: '密码',
+                        type: 'password',
+                        placeholder: '请输入密码',
+                        required: true,
+                        model: ""
+                    },
+                ]
+            }
+        },
+        watch: {
+
+        },
+        computed: {
+            name:{
+                get(){
+                    return this.fields[0].model
+                },
+                set(value){
+                    this.fields[0].model = value
+                }
+            },
+            email:{
+                get(){
+                    return this.fields[1].model
+                },
+                set(value){
+                    this.fields[1].model = value
+                }
+            },
+            password:{
+                get(){
+                    return this.fields[2].model
+                },
+                set(value){
+                    this.fields[2].model = value
+                }
+            }
+        },
+        methods: {
+            checkEmail(){
+                var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+                return pattern.test(this.email)
+            },
+            createAccount(){
+                if (this.name.length == 0){
+                    alert('请输入用户名')
+                    return
+                }
+                if (this.email.length == 0){
+                    alert('请输入邮箱地址')
+                    return
+                }
+                if (!this.checkEmail()){
+                    alert('请输入正确的邮箱地址')
+                    return
+                }
+                if (this.password.length == 0){
+                    alert('请输入密码')
+                    return
+                }
+                if (this.password.length < 6 || this.password.length > 12){
+                    alert('密码长度为6-12位')
+                    return
+                }
+                alert('创建账号成功')
+            }
+        }
+    }
+    let vm = Vue.createApp(app).mount('#app')
+</script>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>属性监听器</title>
+        <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+    </head>
+    <body>
+        <div id="app" style="text-align: center;">
+            <input type="text" v-model="searchText" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+         </div>
+    </body>
+    <script>
+        const app = {
+            data() {
+                return {
+                    searchText: ''
+                }
+            },
+            watch: {
+                searchText(newVal, oldVal) {
+                    if (newVal.length > 10) {
+                        alert('输入的内容不能超过10个字符')
+                    }
+                }
+            },
+            computed: {
+               
+            },
+            methods: {
+               
+            }
+        }
+        let vm = Vue.createApp(app).mount('#app')
+    </script>
+</html>

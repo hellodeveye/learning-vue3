@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>样式绑定</title>
+        <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+        <style>
+            .red {
+                color: red;
+            }
+            .blue {
+                color: blue;
+            }
+            .font-size-26 {
+                font-size: 26px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" style="text-align: center;">
+            <div v-bind:class="{blue: isBlue,red: isRed}" style="width: 100px; height: 100px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+                示例我问俺
+            </div>
+            <button @click="isBlue = !isBlue">切换蓝色</button>
+            <button @click="isRed = !isRed">切换红色</button>
+            <div :class="style">
+                示例文案
+            </div>
+            <h1>数组中的元素都会添加到class中</h1>
+            <div :class="[readClass,fontSizeClass]">
+                示例文案
+            </div>
+
+            <h1>内联样式,内联样式采用驼峰命名法，font-size 需要写成 fontSize</h1>
+            <div :style="inlineStyle">
+                示例文案
+            </div>
+         </div>
+    </body>
+    <script>
+        const app = {
+            data() {
+                return {
+                    isBlue: true,
+                    isRed: false,
+                    style:{
+                        blue: true,
+                        red: false
+                    },
+                    readClass: 'red',
+                    fontSizeClass: 'font-size-26',
+                    inlineStyle: {
+                        color: 'green',
+                        fontSize: '26px'
+                    }
+                }
+            },
+            watch: {
+            
+            },
+            computed: {
+               
+            },
+            methods: {
+               
+            }
+        }
+        let vm = Vue.createApp(app).mount('#app')
+    </script>
+</html>

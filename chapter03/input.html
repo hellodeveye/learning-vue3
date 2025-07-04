@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>表单输入</title>
+        <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+    </head>
+    <body>
+        <div id="app" style="text-align: center;">
+            <p>文本框输入内容：{{textField}}</p>
+            <input type="text" v-model="textField" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+            <p style="white-space: pre-line;">多行文本框输入内容：{{textarea}}</p>
+            <textarea v-model="textarea" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;"></textarea>
+            <h1>不能再标签内插入值， 不会正常显示</h1>
+            <textarea v-model="textarea" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">qweqwe</textarea>
+            <h1>复选框</h1>
+            <input type="checkbox" v-model="hobby" value="足球" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+            <input type="checkbox" v-model="hobby" value="篮球" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+            <p>复选框输入内容：{{hobby}}</p>
+
+            <h1>单选框</h1>
+            <input type="radio" v-model="gender" value="男" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+            <input type="radio" v-model="gender" value="女" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+            <p>单选框输入内容：{{gender}}</p>
+
+            <h1>下拉框</h1>
+            <select v-model="select" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <p>下拉框输入内容：{{select}}</p>
+
+            <h1>多选框</h1>
+            <select v-model="multipleSelect" multiple style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <p>多选框输入内容：{{multipleSelect}}</p>
+
+            <h1>lazy 属性,某些场景下当用户输入内容时，不进行实时更新，而是当用户输入完成后，再进行更新，比如验证</h1>
+            <input type="text" v-model.lazy="lazy" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+            <p>lazy 属性输入内容：{{lazy}}</p>
+
+            <h1>trim 属性, 去除输入内容两端的空格</h1>
+            <input type="text" v-model.trim="trim" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+            <p>trim 属性输入内容：{{trim}}</p>
+         </div>
+    </body>
+
+    <script>
+
+        
+        const app = {
+            data() {
+                return {
+                    textField: '',
+                    textarea: '',
+                    hobby: [],
+                    gender: '',
+                    select: '',
+                    multipleSelect: [],
+                    lazy: '',
+                    trim: ''
+                }
+            },
+            computed: {
+               
+            },
+            methods: {
+               
+            }
+        }
+        let vm = Vue.createApp(app).mount('#app')
+    </script>
+</html>

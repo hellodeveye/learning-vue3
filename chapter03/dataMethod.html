@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>数据和方法</title>
+        <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+    </head>
+    <body>
+        <div id="app" style="text-align: center;">
+            <h1>count:{{count}}</h1>
+            <h1>type:{{type}}</h1>
+            <h1>typeFunc:{{typeFunc()}}</h1>
+            <h1>type1:{{type1}}</h1>
+            <input type="text" v-model="count" style="width: 100px; height: 30px; border: 1px solid #000; border-radius: 5px; padding: 0 10px; margin-top: 20px;">
+         </div>
+    </body>
+    <script>
+        const app = {
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            computed: {
+                type() {
+                    return this.count > 10 ? '大' : '小'
+                },
+                type1:{
+                    get(){
+                        return this.count > 10 ? '大' : '小'
+                    },
+                    set(value){
+                        this.count = value
+                    }
+                }
+            },
+            methods: {
+                add() {
+                    this.count++
+                },
+                typeFunc(){
+                    return this.count > 10 ? '大' : '小'
+                }
+            }
+        }
+        let vm = Vue.createApp(app).mount('#app')
+        console.log(vm.count)
+        console.log(vm.$data.count)
+        vm.add()
+        console.log(vm.count)
+        console.log(vm.$data.count)
+    </script>
+</html>
