@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>应用</h1>
+    <button @click="add">点击</button>
+    <h1>{{count}}</h1>
+  </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return appData
+        }, 
+        computed: {
+            count() {
+                return this.count
+            }
+        },
+        methods: {
+            add() {
+                this.count++
+            }
+        },
+        watch: {
+            count(newVal, oldVal) {
+                console.log(newVal, oldVal)
+            }
+        }
+    })
+
+    const  appData = {
+        count:0
+    }
+
+
+
+    app.mount('#app')
+  
+</script>
+
+</html>

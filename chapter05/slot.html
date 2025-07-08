@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>插槽</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>插槽</h1>
+    <container-component>
+        组件内部
+    </container-component>
+    <container-component>
+    </container-component>
+    <br>
+    <h1>多具名插槽</h1>
+    <multi-slot-component>
+        <template v-slot:header>
+            <h1>标题</h1>
+        </template>
+        <template v-slot:content>
+            <p>内容</p>
+        </template>
+        <template v-slot:footer>
+            <p>底部</p>
+        </template>
+    </multi-slot-component>
+  </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        
+    })
+
+    const containerComponent = {
+        template: '<div style="border-style: solid;border-width: 1px;border-color: black;padding: 10px;"><slot>插槽默认内容</slot></div>'
+    }
+   
+    // 多具名插槽
+    const multiSlotComponent = {
+        template: `
+            <div>
+                <slot name="header">
+                    <h1>标题</h1>
+                </slot>
+                <slot name="content">
+                    <p>内容</p>
+                </slot>
+                <slot name="footer">
+                    <p>底部</p>
+                </slot>
+            </div>
+        `
+    }
+
+    app.component('container-component', containerComponent)
+    app.component('multi-slot-component', multiSlotComponent)
+    app.mount('#app')
+  
+</script>
+
+</html>

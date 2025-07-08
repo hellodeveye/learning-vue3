@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开关组件</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h2>开关组件示例</h2>
+    <div style="margin: 20px 0;">
+      <label>Mini: </label>
+      <switch-component switch-style="mini" :border-color="borderColor" :background-color="backgroundColor" :color="color" @change="change"></switch-component>
+    </div>
+    <div style="margin: 20px 0;">
+      <label>Small: </label>
+      <switch-component switch-style="small" :border-color="borderColor" :background-color="backgroundColor" :color="color" @change="change"></switch-component>
+    </div>
+    <div style="margin: 20px 0;">
+      <label>Medium: </label>
+      <switch-component switch-style="medium" :border-color="borderColor" :background-color="backgroundColor" :color="color" @change="change"></switch-component>
+    </div>
+    <div style="margin: 20px 0;">
+      <label>Large: </label>
+      <switch-component switch-style="large" :border-color="borderColor" :background-color="backgroundColor" :color="color" @change="change"></switch-component>
+    </div>
+  </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                borderColor: '#C0C4CC',
+                backgroundColor: '#C0C4CC',
+                color: '#fff'
+            }
+        },
+        methods: {
+            change(isOpen) {
+                alert(isOpen)
+            }
+        }
+    })
+
+    const switchComponent = {
+        // 定义外部属性
+        props:["switchStyle","borderColor","backgroundColor","color"],
+
+        data() {
+            return {
+                isOpen: false
+            }
+        },
+        computed: {
+            // 获取开关容器的尺寸配置
+            sizeConfig() {
+                const configs = {
+                    mini: { width: 30, height: 16, btnSize: 12 },
+                    small: { width: 40, height: 20, btnSize: 16 },
+                    medium: { width: 50, height: 24, btnSize: 20 },
+                    large: { width: 60, height: 28, btnSize: 24 }
+                }
+                return configs[this.switchStyle] || configs.small
+            },
+            
+            cssStyleBG() {
+                const config = this.sizeConfig
+                const bgColor = this.isOpen ? '#409EFF' : this.backgroundColor
+                return `
+                    position: relative;
+                    width: ${config.width}px;
+                    height: ${config.height}px;
+                    border-radius: ${config.height / 2}px;
+                    background-color: ${bgColor};
+                    transition: background-color 0.3s ease;
+                    cursor: pointer;
+                    border: 1px solid ${this.borderColor};
+                    box-sizing: border-box;
+                `
+            },
+            
+            cssStyleBtn() {
+                const config = this.sizeConfig
+                const btnRadius = config.btnSize / 2
+                const maxLeft = config.width - config.btnSize - 2 // 减去边框宽度
+                const left = this.isOpen ? maxLeft : 1
+                const topOffset = (config.height - config.btnSize) / 2
+                
+                return `
+                    width: ${config.btnSize}px;
+                    height: ${config.btnSize}px;
+                    border-radius: ${btnRadius}px;
+                    background-color: ${this.color};
+                    position: absolute;
+                    top: ${topOffset}px;
+                    left: ${left}px;
+                    transition: left 0.3s ease;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                `
+            }
+        },
+
+        methods: {
+            toggle() {
+                this.isOpen = !this.isOpen
+                this.$emit('change', this.isOpen)
+            }
+        },
+        template: `
+            <div :style="cssStyleBG" @click="toggle">
+                <div :style="cssStyleBtn"></div>
+            </div>
+        `
+    }
+
+    app.component('switch-component', switchComponent)
+    app.mount('#app')
+  
+</script>
+
+</html>

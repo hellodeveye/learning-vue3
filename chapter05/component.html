@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>组件</h1>
+    <my-component></my-component>
+    <alert-component title="按钮1" @myclick="appFunc"></alert-component>
+    <alert-component title="按钮2" @myclick="appFunc"></alert-component>
+
+    <input-component v-model="inputValue"></input-component>
+    <div>{{inputValue}}</div>
+    <button @click="inputValue = ''">重置</button>
+  </div>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                inputValue: '输入框'
+            }
+        },
+        methods: {
+            appFunc(title) {
+                alert("title:" + title)
+            }
+        }
+    })
+
+    const myComponent = {
+        template: '<h1>组件</h1>'
+    } 
+
+    const alertComponent = {
+        data() {
+            return {
+                message: '告警提示框',
+                count:0
+            }
+        },
+        methods: {
+            click() {
+                alert(this.message + ' ' + this.count++)
+                this.$emit('myclick',this.title)
+            }
+        },
+        // 定义组件的属性
+        props: ['title'],
+        template: '<div><button @click="click">{{title}}</button></div>'
+    }
+
+    const inputComponent = {
+        props: ['modelValue'],
+        methods: {
+            action(event) {
+                this.$emit('update:modelValue', event.target.value)
+            }
+        },
+        template: '<div><input type="text" v-model="modelValue" @input="action" /></div>'
+    }
+
+    app.component('my-component', myComponent)
+    app.component('alert-component', alertComponent)
+    app.component('input-component', inputComponent)
+    app.mount('#app')
+  
+</script>
+
+</html>
