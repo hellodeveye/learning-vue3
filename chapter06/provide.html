@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>props</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <my-list :count="10"></my-list>
+    </div>
+</body>
+<script>
+
+
+    const listCom={
+        props:{
+            count:Number
+        },
+        template:`
+        <div style="border: 1px solid black;padding: 10px;">
+            <my-item v-for="item in count" :key="item" :list-count="this.count" :index="item"></my-item>
+        </div>
+        `
+    }
+
+    const itemCom={
+        props:{
+            listCount:Number,
+            index:Number
+        },
+        template:`
+        <div style="border: 1px solid black;padding: 10px;">
+            <my-label :list-count="this.listCount" :index="this.index"></my-label>
+        </div>
+        `
+    }
+    const labelCom={
+        props:{
+            listCount:Number,
+            index:Number
+        },
+        template:`
+        <div>{{this.index}}/{{this.listCount}}</div>
+        `
+    }
+    const app = Vue.createApp({})
+    app.component('my-list',listCom)
+    app.component('my-item',itemCom)
+    app.component('my-label',labelCom)
+    app.mount('#app')
+
+</script>
+
+</html>

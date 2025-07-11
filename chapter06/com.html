@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue组件生命周期</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <comp1></comp1>
+    </div>
+</body>
+<script>
+
+
+    const comp2 = {
+        template: `
+    <div>
+        <h1>组件2</h1>
+    </div>
+    `
+    }
+
+
+    const comp1 = {
+        components: {
+            comp2
+        },
+        template: `
+        <div>
+            <h1>组件1</h1>
+            <comp2></comp2>
+        </div>
+        `
+    }
+
+    const app = Vue.createApp(comp1)
+    app.mount('#app')
+
+</script>
+
+</html>

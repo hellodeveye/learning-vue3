@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue组件生命周期</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+   <sub>
+    <h1>{{message}}</h1>
+   </sub>
+   <button @click="changeMessage">改变消息</button>
+  </div>
+</body>
+<script>
+  
+  const sub ={
+        beforeCreate(){
+            console.log('子组件创建前')
+        },
+        created(){
+            console.log('子组件创建后')
+        },
+        beforeMount(){
+            console.log('子组件挂载前')
+        },
+        mounted(){
+            console.log('子组件挂载后')
+        },beforeUnmount(){
+            console.log('子组件卸载前')
+        },
+        unmounted(){
+            console.log('子组件卸载后')
+        },
+        template:`
+        <div>
+            <slot></slot>
+        </div>
+        `
+    }
+
+
+    const root ={
+        beforeCreate(){
+            console.log('组件创建前')
+        },
+        created(){
+            console.log('组件创建后')
+        },
+        beforeMount(){
+            console.log('组件挂载前')
+        },
+        mounted(){
+            console.log('组件挂载后')
+        },
+        beforeUpdate(){
+            console.log('组件更新前')
+        },
+        updated(){
+            console.log('组件更新后')
+        },
+        beforeUnmount(){
+            console.log('组件卸载前')
+        },
+        unmounted(){
+            console.log('组件卸载后')
+        },
+        errorCaptured(err,vm,info){
+            console.log('组件错误捕获')
+        },
+        renderTracked(e){
+            console.log('组件渲染跟踪')
+        },
+        renderTriggered(e){
+            console.log('组件渲染触发')
+        },
+        data(){
+            return {
+                message:'Hello Vue',
+                count:0
+            }
+        },
+        methods:{
+            changeMessage(){
+                this.message = 'Hello Vue3 '+this.count++
+            }
+        }
+    }
+
+    const app = Vue.createApp(root)
+    app.component('sub',sub)
+    app.mount('#app')
+  
+</script>
+
+</html>

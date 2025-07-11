@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue组件生命周期</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+   <h1>F12查看控制台</h1>
+  </div>
+</body>
+<script>
+  
+  
+    const root ={
+        mounted(){
+            console.log(this.version)
+        },
+        data(){
+            return {
+                message:'Hello Vue',
+                count:0
+            }
+        },
+        methods:{
+            changeMessage(){
+                this.message = 'Hello Vue3 '+this.count++
+            }
+        }
+    }
+
+    const app = Vue.createApp(root)
+    app.config.errorHandler = (err,vm,info)=>{
+        console.log('错误捕获',err,vm,info)
+    }
+    app.config.warnHandler = (msg,vm,trace)=>{
+        console.log('警告捕获',msg,vm,trace)
+    }
+    app.config.globalProperties.$message = 'Hello Vue'
+    app.config.globalProperties.$changeMessage = ()=>{
+        console.log('全局方法',this.message)
+    }
+    app.config.globalProperties.version = '3.5.13'
+    
+    app.mount('#app')
+  
+</script>
+
+</html>

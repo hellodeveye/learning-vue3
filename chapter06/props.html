@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>props</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <comp1 :count="1"></comp1>
+    </div>
+</body>
+<script>
+
+
+    const comp1 = {
+        props:{
+            count:{
+                type:Number,
+                default:0,
+                required:true
+            }
+        },
+        template: `
+        <div>
+            <button @click="changeCount">改变</button>
+            <h1>{{innerCount}}</h1>
+        </div>
+        `,
+        data(){
+            return {
+                thisCount:0
+            }
+        },
+        methods:{
+            changeCount(){
+                this.thisCount++
+            }
+        },
+        computed:{
+            innerCount:{
+                get(){
+                    return this.thisCount + this.count
+                }
+                
+            }
+        }
+    }
+
+    const app = Vue.createApp({})
+    app.component('comp1',comp1)
+    app.mount('#app')
+
+</script>
+
+</html>
