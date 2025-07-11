@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mixin</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <my-list></my-list>
+    </div>
+</body>
+<script>
+
+const myMixin={
+    data(){
+        return {
+            a:"a",
+            b:"b",
+            c:"c"
+        }
+    }
+}
+
+const com = {
+    mixins:[myMixin],
+    data(){
+        return {
+            d:"d"
+        }
+    },
+    template:`
+    <div>
+        <h1>{{a}}</h1>
+        <h1>{{b}}</h1>
+        <h1>{{c}}</h1>
+        <h1>{{d}}</h1>
+        <h1>{{e}}</h1>
+    </div>
+    `
+}
+
+const app = Vue.createApp({})
+app.component('my-list',com)
+// 全局混入
+app.mixin({
+    data(){
+        return {
+            e:"e"
+        }
+    }
+})
+app.mount('#app')
+
+    
+</script>
+
+</html>

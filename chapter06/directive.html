@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义指令</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <sub-com></sub-com>
+    </div>
+</body>
+<script>
+
+
+const subCom = {
+    directives:{
+        getFocus:{
+            mounted(el,binding){
+                el.focus()
+                alert(binding.value)
+            }
+        }
+    },
+    template:`
+    <div>
+        <input type="text" v-get-focus:custom="1" placeholder="自动获取焦点子组件">
+    </div>
+    `
+}
+
+
+
+
+const app = Vue.createApp({})
+
+app.component('sub-com',subCom)
+app.mount('#app')
+
+    
+</script>
+
+</html>

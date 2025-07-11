@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>teleport</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <alert-com></alert-com>
+        <!--其他组件树-->
+        <div style="width: 20px;height: 100px;position: absolute;">
+            <alert-com></alert-com>
+        </div>
+    </div>
+</body>
+<script>
+
+
+const alertCom = {
+    data(){
+        return {
+            show:false
+        }
+    },
+    template:`
+    <div>
+        <button @click="show=true">显示弹窗</button> 
+        <teleport to="body">
+            
+        
+        <div v-if="show" style="position: fixed;top: 0;left: 0;width: 400px;height: 400px;background-color: rgba(0,0,0,0.5); z-index: 1000; ">
+            <h1>弹窗内容</h1>
+            <button @click="show=false">隐藏弹窗</button>
+        </div>
+        </teleport>
+    </div>
+    `
+}
+
+
+
+const app = Vue.createApp({})
+
+app.component('alert-com',alertCom)
+app.mount('#app')
+
+    
+</script>
+
+</html>
