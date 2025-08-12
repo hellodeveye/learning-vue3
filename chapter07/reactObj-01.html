@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+
+<script>
+    const app = Vue.createApp({
+       setup(){
+
+        let myData = Vue.reactive({value:0})
+
+        // 定义独立的响应式值
+        let {value} = Vue.toRefs(myData)
+
+        click = ()=>{
+            value.value +=1
+        }
+
+        return {
+            click,value
+        }
+       },
+       template:`
+        <h1>测试数据对象{{value}}</h1>
+        <button @click="click">点击</button>
+       `
+    })
+    app.mount('#app')
+</script>
+    
+</body>
+</html>

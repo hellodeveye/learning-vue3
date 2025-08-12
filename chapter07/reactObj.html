@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+
+<script>
+    const app = Vue.createApp({
+       setup(){
+
+        // // 不是响应式的，修改了值渲染的值不会变化
+        // let myData = {
+        //     value:0
+        // }
+
+
+        // 定义独立的响应式值
+        let myObj = Vue.ref(0)
+        let myData = Vue.reactive({
+            value:0
+        })
+
+        click = ()=>{
+            myData.value +=1
+            console.log(myData.value)
+        }
+
+        return {
+            myData,click,myObj
+        }
+       },
+       template:`
+        <h1>测试数据{{myData.value}}</h1>
+        <h1>测试数据对象{{myObj}}</h1>
+        <button @click="click">点击</button>
+       `
+    })
+    app.mount('#app')
+</script>
+    
+</body>
+</html>

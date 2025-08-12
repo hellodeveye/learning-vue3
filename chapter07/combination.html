@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组合式API用户列表</title>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+
+<style>
+    .container{
+        margin: 50px;
+    }
+
+    .content{
+        margin:20px
+    }
+</style>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="content">
+                    <input type="radio" :value="-1" v-model="sexFilter"/> 全部
+                    <input type="radio" :value="0" v-model="sexFilter"/> 男
+                    <input type="radio" :value="1" v-model="sexFilter"/> 女
+            </div>
+            <div class="content">
+                搜索：<input type="text" v-model="searchKey"/> 
+            </div>
+            <div class="content">
+               <table border="1px">
+                    <tr>
+                        <td>姓名</td>
+                        <td>性别</td>
+                    </tr>
+                    <tr v-for="item of showData">
+                        <td>{{item.name}}</td>
+                        <td>{{item.sex == 0?'男':'女'}}</td>
+                    </tr>
+               </table>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+
+    let mock = [
+        {
+            name:"小王",
+            sex:0
+        },
+        {
+            name:"小红",
+            sex:1
+        },
+        {
+            name:"小李",
+            sex:1
+        },
+        {
+            name:"小张",
+            sex:0
+        }
+    ]
+    const app = Vue.createApp({
+        setup(){
+            let showData = Vue.ref([])
+            const queryAllData = ()=>{
+                setTimeout(()=>{
+                    showData.value = mock
+                },3000)
+            }
+            Vue.onMounted(queryAllData)
+            let sexFilter = Vue.ref(-1)
+            let searchKey = Vue.ref('')
+            let filterData = () => {
+                searchKey.value = ""
+                if (sexFilter.value == -1){
+                    showData.value = mock
+                }else{
+                    showData.value = mock.filter((d)=>{
+                        return d.sex == sexFilter.value
+                    })
+                }
+            }
+
+            let searchData = ()=> {
+                sexFilter.value = -1
+                if (searchKey.length == 0){
+                    showData.value = mock
+                }else{
+                    showData.value = mock.filter((d)=>{
+                        return d.name.search(searchKey.value) != -1
+                    })
+                }
+            }
+            Vue.watch(sexFilter,filterData)
+            Vue.watch(searchKey,searchData)
+            return {
+                sexFilter,
+                showData,
+                searchKey
+            }
+        }
+    })
+   
+    app.mount('#app')
+</script>
+    
+</body>
+</html>

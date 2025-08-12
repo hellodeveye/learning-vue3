@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <com name="组件名"></com>
+    </div>
+
+
+<script>
+    const app = Vue.createApp()
+    app.component("com",{
+        setup(props,context){
+            let data = "setup 数据"
+            console.log(props.name)
+            console.log(context.attrs)
+            console.log(context.slots)
+            console.log(context.emit)
+            return {
+                data
+            }
+        },
+        props:{
+            name: String
+        },
+        template:`
+        <div>{{data}}</div>
+        `
+       })
+    app.mount('#app')
+</script>
+    
+</body>
+</html>

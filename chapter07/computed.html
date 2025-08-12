@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+
+<script>
+    const app = Vue.createApp({
+       setup(){
+            let a = Vue.ref(1)
+            let b = Vue.ref(2)
+
+            let sum = Vue.computed(()=>{
+                return a.value + b.value
+            })
+
+            click = ()=>{
+                a.value+=1
+            }
+
+            return {
+                click,sum
+            }
+       },
+       template:`
+        <h1>测试数据对象{{sum}}</h1>
+        <button @click="click">点击</button>
+       `
+    })
+    app.mount('#app')
+</script>
+    
+</body>
+</html>
